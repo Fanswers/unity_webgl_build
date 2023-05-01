@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Bootstraper.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Camera.unity
+    guid: 6593fe338d74d45449898393dd235d79
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: e0b29f2df21ea294c90f2db0e2cfc0fb
+  - enabled: 1
+    path: Assets/Scenes/UI.unity
+    guid: 055615ab0f48b0844a261cafd1d7d867
+  - enabled: 1
+    path: Assets/Scenes/player.unity
+    guid: d2bdaa084f931f34f85b8c3dd10bf39b
+  - enabled: 1
+    path: Assets/Scenes/level.unity
+    guid: e3955d39f45959842ab1f46f50ac6b05
+  - enabled: 1
+    path: Assets/Scenes/hangar.unity
+    guid: b26a62786b62bd74ebff39cc4768489a
+  - enabled: 1
+    path: Assets/Scenes/Warehouse.unity
+    guid: abcfe4c718e63e4409dbbca0e4f6855f
+  - enabled: 1
+    path: Assets/Scenes/Construction Site.unity
+    guid: 9f902f3039dc69140a9ccfe5a91b51fa
+  - enabled: 1
+    path: Assets/Scenes/enemies.unity
+    guid: d945971d911297b429dfa612b26dc9cd
+  - enabled: 1
+    path: Assets/Scenes/02 NOMIKA.unity
+    guid: 0b24940a76fa63a4384835e9e0933a0a
+  - enabled: 1
+    path: Assets/Scenes/Managers.unity
+    guid: 8f012b320daf03b419ffe58f544b9db3
+  m_configObjects: {}
