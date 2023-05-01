@@ -23,9 +23,17 @@ public class MusicController : MonoBehaviour
     private bool playing = false;
     private float timer = 0f;
 
+    private bool gameBehavior = false;
+
+    private void Awake()
+    {
+        Bootstraper.instance.gameLoaded += () => gameBehavior = true;
+        Bootstraper.instance.gameUnloaded += () => gameBehavior = false;
+    }
+
     private void Update()
     {
-        Debug.Log(IsCombatActive());
+        if (!gameBehavior) return;
         source.volume = Mathf.Lerp(0f, maxVolume, fadeCurve.Evaluate(cursor));
         if (cursor == 0f)
         {

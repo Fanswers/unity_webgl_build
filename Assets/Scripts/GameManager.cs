@@ -31,26 +31,24 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-
+        Bootstraper.instance.gameLoaded += StartGame;
         spawnManager = FindObjectOfType<SpawnManager>();
         spawnManager.activeSpawnPointPerType[SpawnType.Target] = totalTrips;
     }
 
     private void Start()
     {
-        StartGame();
+        //StartGame();
     }
 
     void Update()
     {
-        if(!gameStart && Input.GetKeyDown("space"))
-        {
-            StartCoroutine("WaitForGeneration");
-        }
     }
 
     public void StartGame()
     {
+        spawnManager.ActivateObjects();
+
         gameDurationTimer = new Timer(gameDuration, GameOver);
         gameDurationTimer.ResetPlay();
 

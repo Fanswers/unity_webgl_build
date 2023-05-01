@@ -53,6 +53,7 @@ MonoBehaviour:
     - {fileID: 9053206275696321428, guid: 35b63efb0c887934884eee924c6fb89d, type: 3}
     - {fileID: 9053206275696321428, guid: 6d46368558d80ec42b9ecbc4e6915773, type: 3}
     - {fileID: 9053206275696321428, guid: 1d3e5afa8ef6bc94a82b79577a6ad3c5, type: 3}
+    - {fileID: 6019355811705852220, guid: 20ee8cdd712867942b04f142b2c81269, type: 3}
     - {fileID: 4535955614831350291, guid: 34b6dbd236bd1fa45bec1fbd7d73be94, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -140,7 +141,7 @@ MonoBehaviour:
       Data: 5|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 5
     - Name: 
       Entry: 3
       Data: 5
@@ -153,6 +154,9 @@ MonoBehaviour:
     - Name: 
       Entry: 3
       Data: 12
+    - Name: 
+      Entry: 3
+      Data: 20
     - Name: 
       Entry: 13
       Data: 
@@ -270,7 +274,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 3
-      Data: 4
+      Data: 35
     - Name: 
       Entry: 8
       Data: 
@@ -421,8 +425,8 @@ MonoBehaviour:
       Entry: 12
       Data: 1
     - Name: 
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 5
     - Name: 
       Entry: 13
       Data: 
@@ -447,7 +451,7 @@ MonoBehaviour:
       Data: 1
     - Name: 
       Entry: 10
-      Data: 5
+      Data: 6
     - Name: 
       Entry: 13
       Data: 

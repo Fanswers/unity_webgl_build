@@ -83,34 +83,4 @@ public class SpawnPoint : MonoBehaviour
     {
         return active;
     }
-
-    void OnDrawGizmosSelected()
-    {
-        switch(type)
-        {
-            case SpawnType.Character :
-            Gizmos.color = Color.red;
-            break;
-
-            case SpawnType.Enemy :
-            Gizmos.color = Color.cyan;
-            break;
-
-            case SpawnType.Shop :
-            Gizmos.color = Color.magenta;
-            break;
-
-            case SpawnType.Chest :
-            Gizmos.color = Color.yellow;
-            break;
-
-            case SpawnType.Target :
-            Gizmos.color = Color.green;
-            break;
-
-            default:
-            break;
-        }
-        Gizmos.DrawSphere(transform.position, Mathf.Max(spawnRange, 0.5f));
-    }
 }

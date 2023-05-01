@@ -6,7 +6,7 @@
             "id": "57220c72-8c54-4374-98b1-9d0b0a60a5d9",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Start",
                     "type": "Button",
                     "id": "49e0b774-6574-49ff-abd3-2422ff9cd270",
                     "expectedControlType": "Button",
@@ -19,11 +19,11 @@
                 {
                     "name": "",
                     "id": "0224f056-6adc-420b-97a5-823e96500904",
-                    "path": "",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

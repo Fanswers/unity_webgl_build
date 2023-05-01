@@ -20,7 +20,7 @@ public class Ship : MonoBehaviour
     private ParticleSystem damageParticleSystem;
     private Rigidbody rb;
     [ReadOnly, ShowInInspector]
-    private int health;
+    public int health;
     public int Health 
     { 
         get => health;

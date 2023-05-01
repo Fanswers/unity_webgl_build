@@ -11,6 +11,8 @@ public class Chest : MonoBehaviour
         Gold, Timer, Health
     }
 
+    public static List<Chest> instances = new List<Chest>();
+
     private void Start()
     {
         Color c;
@@ -35,6 +37,8 @@ public class Chest : MonoBehaviour
                 m.SetColor("_EmissionColor", c);
                 break;
         }
+
+        instances.Add(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,7 +60,9 @@ public class Chest : MonoBehaviour
                     player.GetComponent<Ship>().Health += 10;
                     break;
             }
+            instances.Remove(this);
             Destroy(gameObject);
         }
+        
     }
 }

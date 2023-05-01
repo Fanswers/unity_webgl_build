@@ -15,30 +15,33 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: e0b29f2df21ea294c90f2db0e2cfc0fb
   - enabled: 1
-    path: Assets/Scenes/UI.unity
-    guid: 055615ab0f48b0844a261cafd1d7d867
-  - enabled: 1
     path: Assets/Scenes/player.unity
     guid: d2bdaa084f931f34f85b8c3dd10bf39b
   - enabled: 1
-    path: Assets/Scenes/level.unity
+    path: Assets/Scenes/Minimap.unity
+    guid: a35be542de98b4e4a895615b6c571fc5
+  - enabled: 1
+    path: Assets/Scenes/UI.unity
+    guid: dc40a1bb6e6744f4d958ce1f9b2a772c
+  - enabled: 1
+    path: Assets/Scenes/WORLD/level.unity
     guid: e3955d39f45959842ab1f46f50ac6b05
   - enabled: 1
-    path: Assets/Scenes/hangar.unity
+    path: Assets/Scenes/WORLD/hangar.unity
     guid: b26a62786b62bd74ebff39cc4768489a
   - enabled: 1
-    path: Assets/Scenes/Warehouse.unity
+    path: Assets/Scenes/WORLD/Warehouse.unity
     guid: abcfe4c718e63e4409dbbca0e4f6855f
   - enabled: 1
-    path: Assets/Scenes/Construction Site.unity
+    path: Assets/Scenes/WORLD/Construction Site.unity
     guid: 9f902f3039dc69140a9ccfe5a91b51fa
   - enabled: 1
     path: Assets/Scenes/enemies.unity
     guid: d945971d911297b429dfa612b26dc9cd
   - enabled: 1
-    path: Assets/Scenes/02 NOMIKA.unity
+    path: Assets/Scenes/WORLD/02 NOMIKA.unity
     guid: 0b24940a76fa63a4384835e9e0933a0a
   - enabled: 1
-    path: Assets/Scenes/Managers.unity
+    path: Assets/Scenes/WORLD/Managers.unity
     guid: 8f012b320daf03b419ffe58f544b9db3
   m_configObjects: {}

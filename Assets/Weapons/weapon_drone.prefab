@@ -9,6 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4841022635662754244, guid: 5c5b8fd083534e34a96a84f8e120262d,
         type: 3}
+      propertyPath: cooldownTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4841022635662754244, guid: 5c5b8fd083534e34a96a84f8e120262d,
+        type: 3}
       propertyPath: shipModuleData
       value: 
       objectReference: {fileID: 11400000, guid: 9576755f01e9dc045ada1a95b8f80eb0,

@@ -5,19 +5,24 @@ using UnityEngine;
 
 public class CameraBehavior : MonoBehaviour
 {
+    private Transform worldUpOverride;
+
+    private bool gameLoaded = false;
+
     private void Start()
     {
-        //Bootstraper.instance.gameLoaded += FindPlayerTransform();
-        FindPlayerTransform();
+        Bootstraper.instance.gameLoaded += () => gameLoaded = true;
+        Bootstraper.instance.gameUnloaded += () => gameLoaded = false;
     }
 
 
     private void Update()
     {
+        if (!gameLoaded) return;
         FindPlayerTransform();
     }
     private void FindPlayerTransform()
     {
-        GetComponent<Cinemachine.CinemachineBrain>().m_WorldUpOverride = TargetLibrary.Instance.PlayerTransform;
+        GetComponent<Cinemachine.CinemachineBrain>().m_WorldUpOverride = FindObjectOfType<ShipController>().transform;
     }
 }

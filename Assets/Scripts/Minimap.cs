@@ -10,16 +10,29 @@ public class Minimap : MonoBehaviour
 
     public DisplayedItemOptions[] displayedItemOptions;
     // Update is called once per frame
-    private Vector3[] enemies, objectives;
+    private Vector3[] enemies;
+    private List<SpawnPoint> shops;
+    private Target target;
+    private List<Chest> chests;
+    private Chest objectives;
     private Material[] pointsMaterials;
     private GameObject[][] itemsPointInstance ;
-    public int itemsTypeAmount = 3;
+    public int itemsTypeAmount = 5;
     public float sphereSize;
     public float maxDisplayDistance = 1000;
     public Mesh indicatorMesh;
     private Transform playerTransform;
     public GameObject sphereContainer;
+    private SpawnManager spawnerManager;
+
+    private void Awake()
+    {
+        Bootstraper.instance.gameLoaded += () => gameLoaded = true;
+        Bootstraper.instance.gameUnloaded += () => gameLoaded = false;
+    }
+
     private void Start() {
+        spawnerManager = FindObjectOfType<SpawnManager>();
         itemsPointInstance = new GameObject[itemsTypeAmount][];
         pointsMaterials = new Material[itemsTypeAmount];
         for (int i = 0; i < itemsTypeAmount; i++) {
@@ -52,7 +65,10 @@ public class Minimap : MonoBehaviour
         return sphere;
     }
 
+    private bool gameLoaded = false;
+
     void Update() {
+        if (!gameLoaded) return;
         FetchAllPos();
         UpdateMapPos();
     }
@@ -64,31 +80,61 @@ public class Minimap : MonoBehaviour
                     where Vector3.Distance(enemy.transform.position, playerTransform.transform.position) < maxDisplayDistance
         select enemy.transform.position;
         enemies = query.ToArray();
-        objectives = new Vector3[] { 
-            new Vector3(1000,1000,1000),
-            new Vector3(1000,1000,1000) * -1,
-            new Vector3(10000,10000,-10000) * -1,
-        };
+        shops = spawnerManager.points[SpawnType.Shop];
+        chests = Chest.instances;
+        target = Target.activeTarget;
     }
 
     private void UpdateMapPos() {
         // Handle enemies display
-        for (int i = 0; i < itemsPointInstance[1].Length; i++) {
-            if (i < enemies.Length) {
-                itemsPointInstance[1][i].transform.localPosition = ConvertPosition(enemies[i]);
-            }
-            else {
-                itemsPointInstance[1][i].transform.localPosition = Vector3.one * 1000;
+        // Handle chest display
+        // int chests
+        int index = 0;
+        foreach (Vector3 enemyPos in enemies)
+        {
+            if (index < itemsPointInstance[1].Length && Vector3.Distance(enemyPos, playerTransform.position) < maxDisplayDistance)
+            {
+                itemsPointInstance[1][index].transform.localPosition = ConvertPosition(enemyPos);
+                index++;
             }
         }
-
-        // Handle objectives display
-        for (int i = 0; i < itemsPointInstance[2].Length; i++)
+        for (int i = index; i < itemsPointInstance[1].Length; i++)
         {
-            if (i < objectives.Length)
-            {
-                itemsPointInstance[2][i].transform.localPosition = ConvertPosition(objectives[i]);
+            itemsPointInstance[1][i].transform.localPosition = Vector3.one * 1000;
+        }
+
+        if (target) {
+            itemsPointInstance[2][0].transform.localPosition = ConvertPosition(target.transform.position);
+        }
+
+        // Handle chest display
+        // int chests
+        index = 0;
+        foreach (Chest chest in chests) {
+            
+            if (index < itemsPointInstance[3].Length && Vector3.Distance(chest.transform.position, playerTransform.position) < maxDisplayDistance ) {
+                itemsPointInstance[3][index].transform.localPosition = ConvertPosition(chest.transform.position);
+                index++;
             }
+        }
+        for (int i = index; i < itemsPointInstance[3].Length; i++) {
+            itemsPointInstance[3][i].transform.localPosition = Vector3.one * 1000;
+        }
+
+
+        // Handle shops
+        index = 0;
+        foreach (SpawnPoint shopSpawnPoint in shops)
+        {
+            if (index < itemsPointInstance[4].Length && Vector3.Distance(shopSpawnPoint.transform.position, playerTransform.position) < maxDisplayDistance)
+            {
+                itemsPointInstance[4][index].transform.localPosition = ConvertPosition(shopSpawnPoint.transform.position);
+                index++;
+            }
+        }
+        for (int i = index; i < itemsPointInstance[4].Length; i++)
+        {
+            itemsPointInstance[4][i].transform.localPosition = Vector3.one * 1000;
         }
 
         this.transform.rotation = Quaternion.Inverse(Camera.main.transform.rotation);

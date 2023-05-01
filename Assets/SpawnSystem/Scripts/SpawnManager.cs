@@ -23,7 +23,7 @@ public class SpawnManager : SerializedMonoBehaviour
             points.Add((SpawnType)System.Enum.Parse(typeof(SpawnType), spawnTypeName), new List<SpawnPoint>());
         }
 
-        StartCoroutine("WaitForRegister");
+        //Bootstraper.instance.gameLoaded += ActivateObjects;
     }
 
     public void RegisterSpawnPoint(SpawnPoint point)
@@ -31,21 +31,9 @@ public class SpawnManager : SerializedMonoBehaviour
         points[point.type].Add(point);
     }
 
-    IEnumerator WaitForRegister()
-    {
-        int registeredPointCount = 0;
-        do
-        {
-            foreach(List<SpawnPoint> list in points.Values)
-                registeredPointCount += list.Count;
+   
 
-            yield return new WaitForFixedUpdate();
-        } while (registeredPointCount != FindObjectsOfType<SpawnPoint>().Length);
-
-        ActivateObjects();
-    }
-
-    private void ActivateObjects()
+    public void ActivateObjects()
     {
         foreach(SpawnType type in activeSpawnPointPerType.Keys)
         {

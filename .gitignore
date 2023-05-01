@@ -71,8 +71,8 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-# VSCode IDE
+# VSCode
 .vscode
 
-# Pycharm IDE
+# Pycharm
 .idea
