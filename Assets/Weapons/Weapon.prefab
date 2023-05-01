@@ -214,6 +214,7 @@ MonoBehaviour:
   shipModuleData: {fileID: 11400000, guid: d564f2b1c690f8a459fa25bf0169210b, type: 2}
   fireOrigin: {fileID: 4841022635107393959}
   animator: {fileID: 4841022635662754241}
+  cooldownTime: 0.8
   lineRenderer: {fileID: 4841022635662754240}
   decalPrefab: {fileID: 7305027389571226023, guid: 9570660da313fd043a0f45b01a7f77d4,
     type: 3}

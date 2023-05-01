@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     public float maxDangerLevel = 0.8f;
     public float maxAcceleration = 5f;
     public bool debugMode = false;
+    public float threshold = 25;
     [SerializeField]
     private float maxSpeed = 25f;
 
@@ -76,7 +77,10 @@ public class Enemy : MonoBehaviour
         {
             if (Vector3.Dot(transform.forward, direction.normalized) > 0.8f)
             {
+                float actualAccuracy = accuracy;
+                if (player.Velocity.magnitude > threshold) {actualAccuracy *= 0.5f;}
                 ship.Primary(((player.Position + (Jitter() * 1 / accuracy)) - character.Position).normalized);
+                actualAccuracy = accuracy;
             }
         }
 

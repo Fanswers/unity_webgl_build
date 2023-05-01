@@ -8,7 +8,6 @@ public class GameManager : Singleton<GameManager>
     public int gameDuration = 300;
     public int totalTrips = 5;
     public List<Target> targets = new List<Target>();
-    public Timer gameDurationTimer;
     public bool timerIsMax = false;
 
     private int gold = 0;
@@ -28,12 +27,21 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public float Timer { get => timer; set => timer = value; }
+
     protected override void Awake()
     {
         base.Awake();
         Bootstraper.instance.gameLoaded += StartGame;
+        Bootstraper.instance.gameLoaded += () => gameStart = true;
+        Bootstraper.instance.gameUnloaded += () => gameStart = false;
         spawnManager = FindObjectOfType<SpawnManager>();
         spawnManager.activeSpawnPointPerType[SpawnType.Target] = totalTrips;
+    }
+
+    public void SetPauseGame(bool pause = true)
+    {
+        
     }
 
     private void Start()
@@ -41,16 +49,20 @@ public class GameManager : Singleton<GameManager>
         //StartGame();
     }
 
+    float timer = 0f;
+    bool pause = false;
     void Update()
     {
+        if (gameStart && !pause)
+        {
+            timer += Time.deltaTime;
+        }
     }
 
     public void StartGame()
     {
         spawnManager.ActivateObjects();
 
-        gameDurationTimer = new Timer(gameDuration, GameOver);
-        gameDurationTimer.ResetPlay();
 
         foreach(SpawnPoint point in spawnManager.points[SpawnType.Target])
         {
@@ -63,14 +75,13 @@ public class GameManager : Singleton<GameManager>
         PickNewTarget();
     }
 
-    public void GameOver()
-    {
-        FindObjectOfType<GameOver>().GameLost(false);
-    }
+   
 
     public void GameWin()
     {
-        FindObjectOfType<GameOver>().GameWon(gameDurationTimer.GetTimeLeft());
+        if (!gameStart) return;
+        ViewManager.instance.SwapToView(ViewManager.instance.gameOverView);
+        FindObjectOfType<GameOver>().GameWon(Timer);
     }
 
     public void TargetReached(Target t)

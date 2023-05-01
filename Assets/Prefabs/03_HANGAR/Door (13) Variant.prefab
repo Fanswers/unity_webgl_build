@@ -10,7 +10,17 @@ PrefabInstance:
     - target: {fileID: 1556430025591370663, guid: f7ad7c6b7ff3710448a73f80556db53f,
         type: 3}
       propertyPath: m_Name
-      value: Door (13)
+      value: Door (13) Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2237215113074580736, guid: f7ad7c6b7ff3710448a73f80556db53f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2319919829692065010, guid: f7ad7c6b7ff3710448a73f80556db53f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2807505148520760550, guid: f7ad7c6b7ff3710448a73f80556db53f,
         type: 3}
@@ -85,6 +95,11 @@ PrefabInstance:
     - target: {fileID: 2807505148520760550, guid: f7ad7c6b7ff3710448a73f80556db53f,
         type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7014458045174482037, guid: f7ad7c6b7ff3710448a73f80556db53f,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7244851288164102801, guid: f7ad7c6b7ff3710448a73f80556db53f,

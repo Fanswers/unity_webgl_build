@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  cooldown: 0.2
+  cooldown: 3
   price: 100
   damages: 1
   moduleType: 1

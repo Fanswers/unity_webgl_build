@@ -10,7 +10,8 @@ public class ViewManager : MonoBehaviour {
     public View startingView,
         gameView,
         shopView,
-        shopIconView;
+        shopIconView,
+        gameOverView;
     Stack<View> viewStack = new Stack<View>();
 
     // Start is called before the first frame update

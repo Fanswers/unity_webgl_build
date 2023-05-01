@@ -8,14 +8,19 @@ public class GameTimer : MonoBehaviour
     public TextMeshProUGUI timerText;
     public TimeFormat format;
 
+    bool gameLoaded = false;
+
+    private void Awake()
+    {
+        Bootstraper.instance.gameLoaded += () => gameLoaded = true;
+        Bootstraper.instance.gameUnloaded += () => gameLoaded = false;
+    }
+
     void Update()
     {
-        if(GameManager.instance.gameDurationTimer != null)
+        if(gameLoaded)
         {
-            if(!GameManager.instance.gameDurationTimer.IsFinished())
-                timerText.text = GetTimeString(GameManager.instance.gameDurationTimer.endTime - GameManager.instance.gameDurationTimer.Time, format);
-            else
-                gameObject.SetActive(false);
+            timerText.text = GetTimeString(GameManager.instance.Timer, format);
         }
     }
 

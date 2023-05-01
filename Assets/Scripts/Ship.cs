@@ -20,7 +20,7 @@ public class Ship : MonoBehaviour
     private ParticleSystem damageParticleSystem;
     private Rigidbody rb;
     [ReadOnly, ShowInInspector]
-    public int health;
+    public int health = 5;
     public int Health 
     { 
         get => health;
@@ -76,6 +76,7 @@ public class Ship : MonoBehaviour
         GameManager.instance.Gold += 5;
         if (this.GetComponent<ShipController>() != null)
         {
+            ViewManager.instance.SwapToView(ViewManager.instance.gameOverView);
             FindObjectOfType<GameOver>().GameLost(true);
         }
         Destroy(gameObject);

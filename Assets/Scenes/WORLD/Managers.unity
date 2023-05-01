@@ -288,26 +288,33 @@ PrefabInstance:
         type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8082527343827414464, guid: cde3d16745ad5ee4b88b7aaea1981cf1,
+        type: 3}
     - target: {fileID: 8082527343827414464, guid: cde3d16745ad5ee4b88b7aaea1981cf1,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8082527343827414464, guid: cde3d16745ad5ee4b88b7aaea1981cf1,
         type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"activeSpawnPointPerType.{2es}","value":{"$id":0,"$type":"System.Int32,
+        mscorlib",1}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082527343827414464, guid: cde3d16745ad5ee4b88b7aaea1981cf1,
+        type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
       value: '"path":"activeSpawnPointPerType.{4es}","value":{"$id":0,"$type":"System.Int32,
         mscorlib",3}'
       objectReference: {fileID: 0}
     - target: {fileID: 8082527343827414464, guid: cde3d16745ad5ee4b88b7aaea1981cf1,
         type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
       value: '"path":"prefabPerType.{2es}.[0]","value":$eref:0'
       objectReference: {fileID: 0}
     - target: {fileID: 8082527343827414464, guid: cde3d16745ad5ee4b88b7aaea1981cf1,
         type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[2]
+      propertyPath: serializationData.PrefabModifications.Array.data[3]
       value: '"path":"prefabPerType.{4es}.[0]","value":$eref:1'
       objectReference: {fileID: 0}
     - target: {fileID: 8082527343827414464, guid: cde3d16745ad5ee4b88b7aaea1981cf1,

@@ -54,6 +54,11 @@ jobs:
           checkName: ${{ matrix.testMode }} test results
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Test results (${{ matrix.testMode }})
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
+
   buildWindows:
     needs: testRunner
     name: Build for Windows 🖥️
@@ -91,9 +96,7 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
 
-      - name: Upload build to Google Drive
-        uses: Jodebu/upload-to-drive@v1.3.0
+      - uses: actions/upload-artifact@v3
         with:
-          target: build/StandaloneWindows64
-          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
-          folder: ${{ secrets.GOOGLE_DRIVE_FOLDER_ID }}
+          name: build-StandaloneWindows64
+          path: build/StandaloneWindows64

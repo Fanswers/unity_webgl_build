@@ -250,12 +250,4 @@ public class PerkManager : Singleton<PerkManager>
         Debug.LogWarning("Stat Not Found");
         return 0;
     }
-
-    void Update()
-    {
-        if(Input.GetKeyDown("8"))
-        {
-            UnlockPerk(pool[0]);
-        }
-    }
 }

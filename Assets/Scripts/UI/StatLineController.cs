@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class StatLineController : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class StatLineController : MonoBehaviour
     
     public void Buy()
     {
+        if (GameManager.instance.Gold < prices[currentLevel])
+            return;
         if(currentLevel < maxLevel)
         {
             PerkManager.instance.UnlockPerk(perks[currentLevel]);
@@ -68,5 +71,13 @@ public class StatLineController : MonoBehaviour
     public void ResetPrice()
     {
         price.GetComponentInChildren<TextMeshProUGUI>().text = "" + prices[currentLevel];
+    }
+
+    private void OnEnable()
+    {
+        if(transform.parent.GetChild(0) == transform)
+        {
+            EventSystem.current.SetSelectedGameObject(button);
+        }
     }
 }

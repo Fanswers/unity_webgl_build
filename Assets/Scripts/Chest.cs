@@ -52,9 +52,7 @@ public class Chest : MonoBehaviour
                     GameManager.instance.Gold += 50;
                     break;
                 case Type.Timer:
-                    float tLeft = GameManager.instance.gameDurationTimer.GetTimeLeft();
-                    GameManager.instance.gameDurationTimer.EndTime = tLeft + 60;
-                    GameManager.instance.gameDurationTimer.ResetPlay();
+                    GameManager.instance.Timer -= 60f;
                     break;
                 case Type.Health:
                     player.GetComponent<Ship>().Health += 10;

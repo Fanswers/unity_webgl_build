@@ -86,14 +86,11 @@ public class SpawnManager : SerializedMonoBehaviour
     }
 
 
-    void Update()
+    public void RespawnEnnemy()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha9))
+        foreach(SpawnPoint point in points[SpawnType.Enemy])
         {
-            foreach(SpawnPoint point in points[SpawnType.Enemy])
-            {
-                point.SpawnObjects();
-            }
+            point.SpawnObjects();
         }
     }
 }

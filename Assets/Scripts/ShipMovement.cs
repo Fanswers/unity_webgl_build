@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,68 +6,145 @@ using UnityEngine;
 public class ShipMovement : MonoBehaviour
 {
     private Rigidbody rb;
-    public float thrustSpeed = 90;
-    public float thrustAccelerationFactor = 1.5f;
-    public float strafeAccelerationFactor = 2;
-    public float strafeSpeed = 30;
     public float yawTorque = 1000;
     public float pitchTorque = 1000;
     public float rollTorque = 1000;
 
+    public float maxForwardSpeed = 30f, maxStrafSpeed = 30f;
+    public float timeToMaxSpeed = 2f;
+
+    public float speedBoostFlat = 40f;
+    private float maxForwardSpeedOnBoost() { return (maxForwardSpeed + speedBoostFlat); }
+    public float speedBoostDuration = 2f;
+    private bool isBoosted;
+    private float speedBoostDurationTimer;
     public ParticleSystem HighSpeedParticles;
 
-   
+    private EngineAudio engineAudio;
     private float yawInput, pitchInput, rollInput, thrustInput, horizontalMoveInput, verticalMoveInput;
+    private float oldForwardSpeedFactor = 0f, oldStrafSpeedFactor = 0f;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        engineAudio = GetComponentInChildren<EngineAudio>();
     }
-private float currentThrustSpeed, currentStrafeSpeed, currentVStrafeSpeed;
+    private float currentThrustSpeed, currentStrafeSpeed, currentVStrafeSpeed;
     private void FixedUpdate()
     {
-        // float pitch = pitchInput * pitchTorque * Time.fixedDeltaTime;
+        HandleTorque();
+        SetVelocity();
+    }
 
+    private void HandleTorque()
+    {
         // Pitch
         this.rb.AddRelativeTorque(Vector3.right * Mathf.Clamp(-pitchInput, -1, 1) * pitchTorque);
         // Yaw
         this.rb.AddRelativeTorque(Vector3.up * Mathf.Clamp(yawInput, -1, 1) * yawTorque);
+        // Roll
         this.rb.AddRelativeTorque(Vector3.forward * Mathf.Clamp(-horizontalMoveInput, -1, 1) * rollTorque);
+    }
 
-
-        // Handles movement in vertical and horizontal axis, based on player forward
-        // TODO : Move player with a bit of lerping
-
-        currentThrustSpeed += thrustInput * thrustSpeed * thrustAccelerationFactor * Time.fixedDeltaTime;
-        currentThrustSpeed = Mathf.Clamp(currentThrustSpeed, -thrustSpeed, thrustSpeed);
-        if (thrustInput == 0f)
+    private void SetVelocity()
+    {
+        //
+        // Forward speed calculation
+        Vector3 newForwardVelocity = Vector3.zero;
+        speedBoostDurationTimer -= Time.fixedDeltaTime;
+        float factorSign = 1f;
+        // Calculation of forward
+        if (speedBoostDurationTimer <= 0 && isBoosted)
         {
-            if (currentThrustSpeed != 0f) currentThrustSpeed = Mathf.MoveTowards(currentThrustSpeed , 0f, thrustAccelerationFactor * thrustSpeed * Time.fixedDeltaTime);
+            BoostOver();
+
         }
-        //currentStrafeSpeed = Mathf.MoveTowards(currentStrafeSpeed, strafeSpeed * horizontalMoveInput * Time.fixedDeltaTime, strafeAccelerationFactor * strafeSpeed * Time.fixedDeltaTime);
-        currentVStrafeSpeed = Mathf.MoveTowards(currentVStrafeSpeed, strafeSpeed * verticalMoveInput, strafeAccelerationFactor * strafeSpeed * Time.fixedDeltaTime * verticalMoveInput);
+        if (!isBoosted)
+        {
+            if (this.rb.velocity.magnitude <= .1f && Mathf.Abs(oldForwardSpeedFactor) > .5f)
+            {
+                oldForwardSpeedFactor = 0;
+            }
+            factorSign = Mathf.Sign(thrustInput - oldForwardSpeedFactor);
+            float newForwardSpeedFactor = oldForwardSpeedFactor + ((Time.fixedDeltaTime / timeToMaxSpeed) * factorSign);
+            float newForwardSpeed = InveretSquared(newForwardSpeedFactor) * maxForwardSpeed;
 
-        Vector3 newVelocity = (this.transform.forward * currentThrustSpeed) + this.transform.up * currentVStrafeSpeed * verticalMoveInput;
+            newForwardVelocity = newForwardSpeed * this.transform.forward;
 
-        if (currentThrustSpeed >= (thrustSpeed/100) * 80 && !HighSpeedParticles.isPlaying) {HighSpeedParticles.Play();}
-        if (currentThrustSpeed <= (thrustSpeed/100) * 80 && HighSpeedParticles.isPlaying) {HighSpeedParticles.Stop();}
+            oldForwardSpeedFactor = newForwardSpeedFactor;
+        }
+
+        // Calculation of forward if boosted
+        else
+        {
+            factorSign = Mathf.Sign(thrustInput - oldForwardSpeedFactor);
+            float newForwardSpeedFactor = oldForwardSpeedFactor + ((Time.fixedDeltaTime / timeToMaxSpeed) * factorSign);
+            float newForwardSpeed = InveretSquared(newForwardSpeedFactor) * maxForwardSpeedOnBoost() ;
+
+            newForwardVelocity = newForwardSpeed * this.transform.forward;
+
+            oldForwardSpeedFactor = newForwardSpeedFactor;
+        }
+
+
+
+        // 
+        // Straf speed calculation
+
+        factorSign = Mathf.Sign(verticalMoveInput - oldStrafSpeedFactor);
+        float newStrafSpeedFactor = oldStrafSpeedFactor + ((Time.fixedDeltaTime / timeToMaxSpeed) * factorSign);
+        float newStrafSpeed = newStrafSpeedFactor * maxStrafSpeed;
+
+        Vector3 newStrafVelocity = newStrafSpeed * this.transform.up;
+
+        oldStrafSpeedFactor = newStrafSpeedFactor;
+
+        // Setting velocity
+        Vector3 newVelocity = newForwardVelocity + newStrafVelocity;
+
+        // Playing particles based on forward speed
+        if (oldForwardSpeedFactor >= .8f && !HighSpeedParticles.isPlaying) { HighSpeedParticles.Play(); }
+        if (oldForwardSpeedFactor < .8f && HighSpeedParticles.isPlaying) { HighSpeedParticles.Stop(); }
 
         this.rb.velocity = newVelocity;
     }
 
-
-    public void Thrust(float f) {
-        thrustInput = f;
-    }
-    public void RightJoystick(Vector2 input)
+    private void BoostOver()
     {
-        yawInput = input.x;
-        pitchInput = input.y;
+        isBoosted = false;
     }
 
-    public void LeftJoystick(Vector2 input)
+    private void OnTriggerEnter(Collider other)
     {
-        horizontalMoveInput = input.x;
-        verticalMoveInput = input.y;
+        if (other.transform.gameObject.CompareTag("boost"))
+            BoostStart();
     }
+
+    private void BoostStart()
+    {
+        engineAudio.BoostGateSound();
+        isBoosted = true;
+        speedBoostDurationTimer = 2f;
+        RecalculateOldForwardSpeedFactorOnBoost();
+    }
+
+    private void RecalculateOldForwardSpeedFactorOnBoost()
+    {
+        float speedWithOldFactor = InveretSquared(oldForwardSpeedFactor) * maxForwardSpeed;
+        float newLinearFactor = (speedWithOldFactor / maxForwardSpeedOnBoost());
+        float newFactor = (newLinearFactor * newLinearFactor) * Mathf.Sign(oldForwardSpeedFactor);
+        // float newForwardSpeedFactor = oldForwardSpeedFactor + ((Time.fixedDeltaTime / timeToMaxSpeed) * factorSign);
+        oldForwardSpeedFactor = (oldForwardSpeedFactor * oldForwardSpeedFactor) * Mathf.Sign(oldForwardSpeedFactor);
+    }
+
+    private float InveretSquared(float newForwardSpeedFactor)
+    {
+        return MathF.Sqrt(Mathf.Abs(newForwardSpeedFactor)) * Mathf.Sign(newForwardSpeedFactor);
+    }
+
+    #region input
+    public void Thrust(float f) { thrustInput = f; }
+    public void RightJoystick(Vector2 input) { yawInput = input.x; pitchInput = input.y; }
+    public void LeftJoystick(Vector2 input) { horizontalMoveInput = input.x; verticalMoveInput = input.y; }
+    #endregion
 }

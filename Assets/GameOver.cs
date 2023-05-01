@@ -11,19 +11,18 @@ public class GameOver : MonoBehaviour
 
     private void Start()
     {
-        holder.gameObject.SetActive(false);
     }
 
     public void GameLost(bool killed)
     {
-        holder.gameObject.SetActive(true);
+        ViewManager.instance.SwapToView(this.GetComponent<View>());
         title.text = "DEFEAT";
         body.text = killed ? "You have been killed by the Corporation." : "Your time has run out.";
     }
 
     public void GameWon(float timer)
     {
-        holder.gameObject.SetActive(true);
+        ViewManager.instance.SwapToView(this.GetComponent<View>());
         title.text = "VICTORY";
         body.text = $"Congratulations you won! " +
             $"Try to beat your personal score of : " +

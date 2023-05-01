@@ -51,7 +51,7 @@ public class SpawnPoint : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Color color = Color.white;
         switch (type)

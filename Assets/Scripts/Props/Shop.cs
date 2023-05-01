@@ -7,6 +7,7 @@ using UnityEngine.InputSystem.LowLevel;
 public class Shop : MonoBehaviour
 {
     public InputActionReference openShop;
+    public InputActionReference closeShop;
     public bool isInRange = false;
     public InputActionAsset inputActionAsset;
     public string mapId;
@@ -27,13 +28,16 @@ public class Shop : MonoBehaviour
         {
             isInRange = false;
             ViewManager.instance.Return();
+            inputActionAsset.FindActionMap("Gameplay").Enable();
+            inputActionAsset.FindActionMap("UI").Disable();
         }
     }
 
     void Start()
     {
-        inputActionAsset.FindActionMap(mapId).Enable();
+        //inputActionAsset.FindActionMap(mapId).Enable();
         openShop.action.started += ButtonPress;
+        closeShop.action.started += ButtonPress;
 
     }
 
@@ -47,9 +51,28 @@ public class Shop : MonoBehaviour
         }
     }
 
+    private bool shopOpen = false;
+
     void ButtonPress(InputAction.CallbackContext context)
     {
-        if(isInRange)
-            buttonDown = true;
+        if (!isInRange) return;
+        if (!shopOpen)
+        {
+            shopOpen = true;
+            inputActionAsset.FindActionMap("Gameplay").Disable();
+            inputActionAsset.FindActionMap("UI").Enable();
+            GameManager.instance.SetPauseGame(true);
+            ViewManager.instance.SwapToView(ViewManager.instance.shopView);
+
+
+        }
+        else
+        {
+            GameManager.instance.SetPauseGame(false);
+            ViewManager.instance.Return();
+            inputActionAsset.FindActionMap("Gameplay").Enable();
+            inputActionAsset.FindActionMap("UI").Disable();
+            shopOpen = false;
+        }
     }
 }

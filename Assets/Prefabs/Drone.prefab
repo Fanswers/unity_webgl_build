@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   minDistToShoot: 100
-  accuracy: 0.2
+  accuracy: 0.1
   maxDangerLevel: 0.8
   maxAcceleration: 25
   debugMode: 1
@@ -141,6 +141,7 @@ MonoBehaviour:
   damageParticlesPrefab: {fileID: 5818223546324162061, guid: a957ab176b799584193133e61b810968,
     type: 3}
   HighSpeedParticles: {fileID: 0}
+  health: 0
   primaryWeapon: {fileID: 1277322294869568455}
   secondaryWeapon: {fileID: 0}
 --- !u!1 &4686674190709809460
@@ -369,6 +370,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: weapon_drone
+      objectReference: {fileID: 0}
+    - target: {fileID: 5811000307777588663, guid: c2b86c0c659e14046a042081c9cda0d9,
+        type: 3}
+      propertyPath: cooldownTime
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2b86c0c659e14046a042081c9cda0d9, type: 3}

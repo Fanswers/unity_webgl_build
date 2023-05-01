@@ -53,11 +53,4 @@ public class Target : MonoBehaviour
     }
 #endif
 
-    void Update()
-    {
-        if(isNext && Input.GetKeyUp("0"))
-        {
-            TargetReached();
-        }
-    }
 }

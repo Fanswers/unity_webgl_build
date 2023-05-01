@@ -19,6 +19,7 @@ public class Bootstraper : Module.Singleton.Controller.Singleton<Bootstraper>
     public event Action menuLoaded;
     public event Action gameLoaded;
     public event Action gameUnloaded;
+    [HideInInspector] public bool startGame;
 
     [SerializeField] private SceneGroup scenesToLoad;
 
@@ -50,8 +51,11 @@ public class Bootstraper : Module.Singleton.Controller.Singleton<Bootstraper>
 
         // Wait for user input or other conditions before starting the game
         // You can use events or other communication methods to detect when to start the game
-        // For now, we'll just wait for 5 seconds
-        yield return new WaitForSeconds(5f);
+        while(!startGame)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+        startGame = false;
 
         // Unload start scenes
         Canvas.gameObject.SetActive(true);

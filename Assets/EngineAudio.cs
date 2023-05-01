@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class EngineAudio : MonoBehaviour
 {
-    public AudioSource startSource;
-    public AudioClip audioClipStart;
+    public AudioSource boostGateSource;
+    public AudioClip audioClipBoost;
     private ShipController shipController;
     private InputAction inputAction;
 
@@ -19,22 +19,13 @@ public class EngineAudio : MonoBehaviour
     private bool flag = false;
     private void Update()
     {
-        if (inputAction.ReadValue<float>() > 0.5)
-        {
-            if (!flag && startSource.isPlaying == false)
-            {
-                flag = true;
-                startSource.PlayOneShot(audioClipStart);
-            }
-        }
-        else if (flag == true)
-        {
-            flag = false;
-        }
     }
 
-    private void MotorStart(InputAction.CallbackContext context)
+    public void BoostGateSound()
     {
-        startSource.Play();
+        if (boostGateSource.isPlaying == false)
+        {
+            boostGateSource.PlayOneShot(audioClipBoost);
+        }
     }
 }
